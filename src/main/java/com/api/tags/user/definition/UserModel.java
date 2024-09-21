@@ -3,15 +3,19 @@ package com.api.tags.user.definition;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.api.tags.follow.definitions.FollowModel;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,6 +47,12 @@ public class UserModel implements UserDetails {
 	private String bio;
 	
 	private LocalDateTime createdAt;
+	
+	@OneToMany(mappedBy = "follower")
+    private Set<FollowModel> following;
+
+    @OneToMany(mappedBy = "followed")
+    private Set<FollowModel> followers;
 	
 	public UserModel(String email, String name, String password, RoleEnum role) {
 		this.email = email;
