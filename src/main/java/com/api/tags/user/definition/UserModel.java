@@ -1,5 +1,6 @@
 package com.api.tags.user.definition;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,14 +32,24 @@ public class UserModel implements UserDetails {
 	
 	private String email;
 	
+	private String name;
+	
 	private String password;
 	
 	private RoleEnum role;
 	
-	public UserModel(String email, String password, RoleEnum role) {
+	private String profilePicture;
+	
+	private String bio;
+	
+	private LocalDateTime createdAt;
+	
+	public UserModel(String email, String name, String password, RoleEnum role) {
 		this.email = email;
+		this.name = name;
 		this.password = password;
 		this.role = role;
+		this.createdAt = LocalDateTime.now();
 	}
 
 	@Override

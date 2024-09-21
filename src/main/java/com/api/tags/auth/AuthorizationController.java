@@ -49,7 +49,7 @@ public class AuthorizationController {
 		
 		String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
 		
-		UserModel newUser = new UserModel(data.getEmail(), encryptedPassword, data.getRole());
+		UserModel newUser = new UserModel(data.getEmail(), data.getName(), encryptedPassword, data.getRole());
 		
 		this.repository.save(newUser);
 		

@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ResgisterDTO {
 	private String email;
+	
+	private String name;
 
 	private String password;
 	
