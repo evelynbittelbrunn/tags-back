@@ -44,7 +44,7 @@ public class PostService {
 
 	public List<PostDTO> findAll(int pagination, int items) {
 		
-		Page<PostModel> posts = postRepository.findAll(PageRequest.of(pagination, items));
+		Page<PostModel> posts = postRepository.findAll(PageRequest.of(pagination - 1, items));
 		
 		return posts.map(postDTOFactory::create).getContent();
 	}

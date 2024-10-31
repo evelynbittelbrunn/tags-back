@@ -20,14 +20,19 @@ public class PostDTOFactory {
 	
 	public PostDTO create(PostModel postModel) {
 		
-        PostDTO postDTO = new PostDTO();
-        postDTO.setId(postModel.getId());
-        postDTO.setContent(postModel.getContent());
-        
-        UserPostDTO userPostDTO = userFactory.createUserPostDTO(postModel.getUser());
-        postDTO.setUser(userPostDTO);
-        
-        return postDTO;
+		PostDTO postDTO = new PostDTO();
+	    postDTO.setId(postModel.getId());
+	    postDTO.setContent(postModel.getContent());
+	    
+	    if (postModel.getImageData() != null) {
+	        String base64Image = Base64.getEncoder().encodeToString(postModel.getImageData());
+	        postDTO.setImageData(base64Image);
+	    }
+	    
+	    UserPostDTO userPostDTO = userFactory.createUserPostDTO(postModel.getUser());
+	    postDTO.setUser(userPostDTO);
+	    
+	    return postDTO;
     }
 	
 	public NewPostDTO createNewPostDTO(PostModel postModel) {

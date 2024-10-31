@@ -24,4 +24,6 @@ public class PostDTO {
     
     private LocalDateTime createdAt;
     
+    private String imageData;
+    
 }
