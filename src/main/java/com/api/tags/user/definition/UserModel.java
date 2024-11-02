@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +27,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Entity(name = "users")
 @Getter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class UserModel implements UserDetails {
 	@Id
@@ -42,7 +44,7 @@ public class UserModel implements UserDetails {
 	
 	private RoleEnum role;
 	
-	private String profilePicture;
+	private byte[] profilePicture;
 	
 	private String bio;
 	

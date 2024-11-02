@@ -11,4 +11,5 @@ public class UserProfileDTO {
 	
 	private String bio;
 
+	private String profilePicture;
 }

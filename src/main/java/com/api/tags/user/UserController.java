@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +21,15 @@ public class UserController {
     public ResponseEntity<UserProfileDTO> getUserNameAndBio(@PathVariable String userId) {
         UserProfileDTO userDTO = userService.getUserNameAndBio(userId);
         return ResponseEntity.ok(userDTO);
+    }
+    
+    @PutMapping("/profile/{userId}")
+    public ResponseEntity<UserProfileDTO> updateUserProfile(
+            @PathVariable String userId, 
+            @RequestBody UserProfileDTO userProfileDTO
+    	) {
+        
+        UserProfileDTO updatedProfile = userService.updateUserProfile(userId, userProfileDTO);
+        return ResponseEntity.ok(updatedProfile);
     }
 }
