@@ -1,11 +1,12 @@
 package com.api.tags.post;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.api.tags.post.definition.PostModel;
@@ -45,6 +46,15 @@ public class PostService {
 	public List<PostDTO> findAll(int pagination, int items) {
 		
 		Page<PostModel> posts = postRepository.findAll(PageRequest.of(pagination - 1, items));
+		
+		return posts.map(postDTOFactory::create).getContent();
+	}
+	
+	public List<PostDTO> findAllByUser(int pagination, int items, String userId) {
+		
+		Pageable pageable = PageRequest.of(pagination - 1, items, Sort.by(Sort.Direction.DESC, "createdAt"));
+		
+		Page<PostModel> posts = postRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
 		
 		return posts.map(postDTOFactory::create).getContent();
 	}
