@@ -3,11 +3,11 @@ package com.api.tags.user.factory;
 import java.util.Base64;
 
 import com.api.tags.user.definition.UserModel;
-import com.api.tags.user.definition.dto.UserProfileDTO;
+import com.api.tags.user.definition.dto.UserProfileEditDTO;
 
 public class UserProfileFactory {
 
-    public static UserModel updateUserProfile(UserModel user, UserProfileDTO userProfileDTO) {
+    public static UserModel updateUserProfile(UserModel user, UserProfileEditDTO userProfileDTO) {
         if (userProfileDTO.getName() != null && !userProfileDTO.getName().isEmpty()) {
             user.setName(userProfileDTO.getName());
         }

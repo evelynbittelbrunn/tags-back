@@ -7,29 +7,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.tags.user.definition.dto.UserProfileDTO;
+import com.api.tags.user.definition.dto.UserProfileEditDTO;
 
 @RestController
 @RequestMapping("/tags/users")
 public class UserController {
-	 @Autowired
+	
+	@Autowired
     private UserService userService;
 
     @GetMapping("/profile/{userId}")
-    public ResponseEntity<UserProfileDTO> getUserNameAndBio(@PathVariable String userId) {
-        UserProfileDTO userDTO = userService.getUserNameAndBio(userId);
+    public ResponseEntity<UserProfileDTO> getUserNameAndBio(
+    		@PathVariable String userId, 
+    		@RequestParam String currentUserId
+    ) {
+    	UserProfileDTO userDTO = userService.getUserNameAndBio(userId, currentUserId);
         return ResponseEntity.ok(userDTO);
     }
     
     @PutMapping("/profile/{userId}")
-    public ResponseEntity<UserProfileDTO> updateUserProfile(
+    public ResponseEntity<UserProfileEditDTO> updateUserProfile(
             @PathVariable String userId, 
-            @RequestBody UserProfileDTO userProfileDTO
+            @RequestBody UserProfileEditDTO userProfileDTO
     	) {
         
-        UserProfileDTO updatedProfile = userService.updateUserProfile(userId, userProfileDTO);
+    	UserProfileEditDTO updatedProfile = userService.updateUserProfile(userId, userProfileDTO);
         return ResponseEntity.ok(updatedProfile);
     }
 }

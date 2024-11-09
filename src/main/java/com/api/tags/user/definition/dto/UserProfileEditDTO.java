@@ -5,13 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserProfileDTO {
-	
+public class UserProfileEditDTO {
 	private String name;
 	
 	private String bio;
 
 	private String profilePicture;
-	
-	private boolean isFollowing;
 }

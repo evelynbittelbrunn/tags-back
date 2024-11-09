@@ -5,8 +5,10 @@ import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.api.tags.follow.repository.FollowRepository;
 import com.api.tags.user.definition.UserModel;
 import com.api.tags.user.definition.dto.UserProfileDTO;
+import com.api.tags.user.definition.dto.UserProfileEditDTO;
 import com.api.tags.user.factory.UserProfileFactory;
 import com.api.tags.user.repository.UserRepository;
 
@@ -16,20 +18,25 @@ public class UserService {
 	@Autowired
     private UserRepository userRepository;
 	
+	@Autowired
+	private FollowRepository followRepository;
+	
 	private UserProfileFactory userProfileFactory;
 
-	public UserProfileDTO getUserNameAndBio(String userId) {
-	    UserModel user = userRepository.findById(userId)
+	public UserProfileDTO getUserNameAndBio(String userId, String currentUserId) {
+		UserModel user = userRepository.findById(userId)
 	            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
 	    String profilePicture = user.getProfilePicture() != null 
 	            ? Base64.getEncoder().encodeToString(user.getProfilePicture()) 
 	            : null;
 
-	    return new UserProfileDTO(user.getName(), user.getBio(), profilePicture);
+	    boolean isFollowing = followRepository.existsByFollowerIdAndFollowedId(currentUserId, userId);
+
+	    return new UserProfileDTO(user.getName(), user.getBio(), profilePicture, isFollowing);
 	}
 
-	public UserProfileDTO updateUserProfile(String userId, UserProfileDTO userProfileDTO) {
+	public UserProfileEditDTO updateUserProfile(String userId, UserProfileEditDTO userProfileDTO) {
 	    UserModel user = userRepository.findById(userId)
 	            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
@@ -40,6 +47,6 @@ public class UserService {
 	            ? Base64.getEncoder().encodeToString(user.getProfilePicture()) 
 	            : null;
 
-	    return new UserProfileDTO(user.getName(), user.getBio(), profilePicture);
+	    return new UserProfileEditDTO(user.getName(), user.getBio(), profilePicture);
 	}
 }
