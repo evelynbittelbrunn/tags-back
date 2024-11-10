@@ -43,19 +43,14 @@ public class PostService {
 		
 	}
 
-	public List<PostDTO> findAll(int pagination, int items) {
-		
-		Page<PostModel> posts = postRepository.findAll(PageRequest.of(pagination - 1, items));
-		
-		return posts.map(postDTOFactory::create).getContent();
-	}
-	
-	public List<PostDTO> findAllByUser(int pagination, int items, String userId) {
-		
-		Pageable pageable = PageRequest.of(pagination - 1, items, Sort.by(Sort.Direction.DESC, "createdAt"));
-		
-		Page<PostModel> posts = postRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
-		
-		return posts.map(postDTOFactory::create).getContent();
-	}
+	public List<PostDTO> findAll(int pagination, int items, String currentUserId) {
+        var posts = postRepository.findAll(PageRequest.of(pagination - 1, items));
+        return posts.map(post -> postDTOFactory.create(post, currentUserId)).getContent();
+    }
+
+    public List<PostDTO> findAllByUser(int pagination, int items, String userId, String currentUserId) {
+        Pageable pageable = PageRequest.of(pagination - 1, items, Sort.by(Sort.Direction.DESC, "createdAt"));
+        var posts = postRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
+        return posts.map(post -> postDTOFactory.create(post, currentUserId)).getContent();
+    }
 }

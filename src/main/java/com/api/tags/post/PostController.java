@@ -26,13 +26,20 @@ public class PostController {
 		return postService.save(post);
 	}
 	
-    @GetMapping("/find-all")
-    public List<PostDTO> findAll(@RequestParam int pagination, @RequestParam int items) {
-        return postService.findAll(pagination, items);
+	@GetMapping("/find-all")
+    public List<PostDTO> findAll(@RequestParam int pagination, 
+                                 @RequestParam int items, 
+                                 @RequestParam String currentUserId
+    ) {
+        return postService.findAll(pagination, items, currentUserId);
     }
-    
+
     @GetMapping("/{userId}")
-    public List<PostDTO> findAllByUser(@RequestParam int pagination, @RequestParam int items, @PathVariable String userId) {
-        return postService.findAllByUser(pagination, items, userId);
+    public List<PostDTO> findAllByUser(@RequestParam int pagination, 
+                                       @RequestParam int items, 
+                                       @PathVariable String userId, 
+                                       @RequestParam String currentUserId
+    ) {
+        return postService.findAllByUser(pagination, items, userId, currentUserId);
     }
 }

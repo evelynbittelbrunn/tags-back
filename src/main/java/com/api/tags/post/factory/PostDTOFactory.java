@@ -5,6 +5,7 @@ import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.api.tags.like.repository.LikeRepository;
 import com.api.tags.post.definition.PostModel;
 import com.api.tags.post.definition.dto.NewPostDTO;
 import com.api.tags.post.definition.dto.PostDTO;
@@ -18,21 +19,26 @@ public class PostDTOFactory {
 	@Autowired
     private UserDTOFactory userFactory;
 	
-	public PostDTO create(PostModel postModel) {
-		
-		PostDTO postDTO = new PostDTO();
-	    postDTO.setId(postModel.getId());
-	    postDTO.setContent(postModel.getContent());
-	    
-	    if (postModel.getImageData() != null) {
-	        String base64Image = Base64.getEncoder().encodeToString(postModel.getImageData());
-	        postDTO.setImageData(base64Image);
-	    }
-	    
-	    UserPostDTO userPostDTO = userFactory.createUserPostDTO(postModel.getUser());
-	    postDTO.setUser(userPostDTO);
-	    
-	    return postDTO;
+	@Autowired
+    private LikeRepository likeRepository;
+	
+	public PostDTO create(PostModel postModel, String currentUserId) {
+        PostDTO postDTO = new PostDTO();
+        postDTO.setId(postModel.getId());
+        postDTO.setContent(postModel.getContent());
+        
+        if (postModel.getImageData() != null) {
+            String base64Image = Base64.getEncoder().encodeToString(postModel.getImageData());
+            postDTO.setImageData(base64Image);
+        }
+
+        boolean isLiked = likeRepository.existsByUserIdAndPostId(currentUserId, postModel.getId());
+        postDTO.setIsLiked(isLiked);
+
+        UserPostDTO userPostDTO = userFactory.createUserPostDTO(postModel.getUser());
+        postDTO.setUser(userPostDTO);
+        
+        return postDTO;
     }
 	
 	public NewPostDTO createNewPostDTO(PostModel postModel) {

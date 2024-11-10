@@ -26,4 +26,6 @@ public class PostDTO {
     
     private String imageData;
     
+    private Boolean isLiked;
+   
 }
