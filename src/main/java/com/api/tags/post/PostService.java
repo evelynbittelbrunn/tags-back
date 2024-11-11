@@ -3,17 +3,21 @@ package com.api.tags.post;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.api.tags.category.definition.CategoryModel;
+import com.api.tags.category.repository.CategoryRepository;
 import com.api.tags.post.definition.PostModel;
 import com.api.tags.post.definition.dto.NewPostDTO;
 import com.api.tags.post.definition.dto.PostDTO;
 import com.api.tags.post.factory.PostDTOFactory;
 import com.api.tags.post.repository.PostRepository;
+import com.api.tags.postCategory.definition.PostCategoryId;
+import com.api.tags.postCategory.definition.PostCategoryModel;
+import com.api.tags.postCategory.repository.PostCategoryRepository;
 import com.api.tags.user.definition.UserModel;
 import com.api.tags.user.repository.UserRepository;
 
@@ -29,6 +33,12 @@ public class PostService {
 	@Autowired
     private PostDTOFactory postDTOFactory;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private PostCategoryRepository postCategoryRepository;
+	
 	
 	public NewPostDTO save(NewPostDTO post) {
 		
@@ -38,6 +48,21 @@ public class PostService {
 		PostModel model = postDTOFactory.create(post, user);
 		
 		PostModel newPost = postRepository.save(model);
+		
+		 if (post.getCategoryIds() != null && !post.getCategoryIds().isEmpty()) {
+	        for (String categoryId : post.getCategoryIds()) {
+	            CategoryModel category = categoryRepository.findById(categoryId)
+	                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+	            PostCategoryModel postCategory = new PostCategoryModel();
+	            PostCategoryId postCategoryId = new PostCategoryId(newPost.getId(), category.getId());
+	            postCategory.setId(postCategoryId);
+	            postCategory.setPost(newPost);
+	            postCategory.setCategory(category);
+
+	            postCategoryRepository.save(postCategory);
+	        }
+	    }
 		
 		return postDTOFactory.createNewPostDTO(newPost);
 		
