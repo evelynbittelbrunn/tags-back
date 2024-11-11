@@ -62,11 +62,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.educandoweb</groupId>
-			<artifactId>course</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.6.0</version>
