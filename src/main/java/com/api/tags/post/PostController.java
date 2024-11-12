@@ -3,6 +3,9 @@ package com.api.tags.post;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,5 +44,15 @@ public class PostController {
                                        @RequestParam String currentUserId
     ) {
         return postService.findAllByUser(pagination, items, userId, currentUserId);
+    }
+    
+    @DeleteMapping("/delete-post/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable String postId) {
+        try {
+            postService.deletePostById(postId);
+            return ResponseEntity.ok("Postagem excluída com sucesso");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Postagem não encontrada");
+        }
     }
 }

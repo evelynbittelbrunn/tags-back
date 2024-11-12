@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.api.tags.category.definition.CategoryModel;
 import com.api.tags.category.repository.CategoryRepository;
+import com.api.tags.comment.repository.CommentRepository;
+import com.api.tags.like.repository.LikeRepository;
 import com.api.tags.post.definition.PostModel;
 import com.api.tags.post.definition.dto.NewPostDTO;
 import com.api.tags.post.definition.dto.PostDTO;
@@ -20,6 +22,8 @@ import com.api.tags.postCategory.definition.PostCategoryModel;
 import com.api.tags.postCategory.repository.PostCategoryRepository;
 import com.api.tags.user.definition.UserModel;
 import com.api.tags.user.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PostService {
@@ -38,6 +42,12 @@ public class PostService {
 	
 	@Autowired
 	private PostCategoryRepository postCategoryRepository;
+
+    @Autowired
+    private LikeRepository likeRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 	
 	
 	public NewPostDTO save(NewPostDTO post) {
@@ -77,5 +87,19 @@ public class PostService {
         Pageable pageable = PageRequest.of(pagination - 1, items, Sort.by(Sort.Direction.DESC, "createdAt"));
         var posts = postRepository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
         return posts.map(post -> postDTOFactory.create(post, currentUserId)).getContent();
+    }
+    
+    @Transactional
+    public void deletePostById(String postId) {
+        PostModel post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Postagem não encontrada"));
+        
+        postCategoryRepository.deleteAllByPost(post);
+
+        likeRepository.deleteAllByPost(post);
+
+        commentRepository.deleteAllByPost(post);
+
+        postRepository.delete(post);
     }
 }
