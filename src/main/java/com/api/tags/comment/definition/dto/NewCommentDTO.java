@@ -1,7 +1,5 @@
 package com.api.tags.comment.definition.dto;
 
-import com.api.tags.user.definition.dto.UserPostDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDTO {
+public class NewCommentDTO {
 	
-    private String id;
-
-    private UserPostDTO user;
-
+    private String userId;
+	
+    private String postId;
+    
     private String content;
     
 }
