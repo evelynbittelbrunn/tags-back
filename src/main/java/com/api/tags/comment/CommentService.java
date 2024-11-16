@@ -66,4 +66,11 @@ public class CommentService {
             return new CommentDTO(comment.getId(), userPostDTO, comment.getContent());
         }).collect(Collectors.toList());
     }
+    
+    public void deleteComment(String commentId) {
+        CommentModel comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("Comentário não encontrado"));
+
+        commentRepository.delete(comment);
+    }
 }

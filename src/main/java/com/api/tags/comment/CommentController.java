@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,4 +40,16 @@ public class CommentController {
         List<CommentDTO> comments = commentService.getCommentsByPostId(postId);
         return ResponseEntity.ok(comments);
     }
+	
+	@DeleteMapping("/{commentId}")
+	public ResponseEntity<String> deleteComment(@PathVariable String commentId) {
+	    try {
+	        commentService.deleteComment(commentId);
+	        return ResponseEntity.ok("Comentário excluído com sucesso");
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.badRequest().body("Comentário não encontrado");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o comentário");
+	    }
+	}
 }
