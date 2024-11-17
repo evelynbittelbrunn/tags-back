@@ -79,7 +79,7 @@ public class PostService {
 	}
 
 	public List<PostDTO> findAll(int pagination, int items, String currentUserId) {
-        var posts = postRepository.findAll(PageRequest.of(pagination - 1, items));
+        var posts = postRepository.findPosts(currentUserId, PageRequest.of(pagination - 1, items));
         return posts.map(post -> postDTOFactory.create(post, currentUserId)).getContent();
     }
 
