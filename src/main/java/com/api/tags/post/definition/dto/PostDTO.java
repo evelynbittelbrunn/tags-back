@@ -27,5 +27,8 @@ public class PostDTO {
     private String imageData;
     
     private Boolean isLiked;
-   
+ 
+    private int commentCount;
+    
+    private int likeCount;
 }

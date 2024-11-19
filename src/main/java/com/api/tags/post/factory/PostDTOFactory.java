@@ -5,6 +5,7 @@ import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.api.tags.comment.repository.CommentRepository;
 import com.api.tags.like.repository.LikeRepository;
 import com.api.tags.post.definition.PostModel;
 import com.api.tags.post.definition.dto.NewPostDTO;
@@ -22,6 +23,9 @@ public class PostDTOFactory {
 	@Autowired
     private LikeRepository likeRepository;
 	
+	@Autowired
+	private CommentRepository commentRepository;
+	
 	public PostDTO create(PostModel postModel, String currentUserId) {
         PostDTO postDTO = new PostDTO();
         postDTO.setId(postModel.getId());
@@ -37,6 +41,9 @@ public class PostDTOFactory {
 
         UserPostDTO userPostDTO = userFactory.createUserPostDTO(postModel.getUser());
         postDTO.setUser(userPostDTO);
+        
+        postDTO.setCommentCount(commentRepository.countByPostId(postModel.getId()));
+        postDTO.setLikeCount(likeRepository.countByPostId(postModel.getId()));
         
         return postDTO;
     }
