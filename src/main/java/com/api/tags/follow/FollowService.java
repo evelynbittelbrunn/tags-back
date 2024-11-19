@@ -17,7 +17,7 @@ public class FollowService {
     @Autowired
     private UserRepository userRepository;
 
-    public void toggleFollow(String followerId, String followedId) {
+    public boolean toggleFollow(String followerId, String followedId) {
         UserModel follower = userRepository.findById(followerId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
@@ -28,13 +28,15 @@ public class FollowService {
 
         if (existingFollow != null) {
             followRepository.delete(existingFollow);
+            return false;
         } else {
-        	FollowId followId = new FollowId(follower.getId(), followed.getId());
+            FollowId followId = new FollowId(follower.getId(), followed.getId());
             FollowModel follow = new FollowModel();
             follow.setId(followId);
             follow.setFollower(follower);
             follow.setFollowed(followed);
             followRepository.save(follow);
+            return true;
         }
     }
 }

@@ -14,4 +14,8 @@ public class UserProfileDTO {
 	private String profilePicture;
 	
 	private boolean isFollowing;
+	
+	private long followersCount;
+	
+	private long followingCount;
 }

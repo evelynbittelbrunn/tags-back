@@ -32,8 +32,12 @@ public class UserService {
 	            : null;
 
 	    boolean isFollowing = followRepository.existsByFollowerIdAndFollowedId(currentUserId, userId);
+	    
+	    long followersCount = followRepository.countByFollowedId(userId);
+	    
+	    long followingCount = followRepository.countByFollowerId(userId);
 
-	    return new UserProfileDTO(user.getName(), user.getBio(), profilePicture, isFollowing);
+	    return new UserProfileDTO(user.getName(), user.getBio(), profilePicture, isFollowing, followersCount, followingCount);
 	}
 
 	public UserProfileEditDTO updateUserProfile(String userId, UserProfileEditDTO userProfileDTO) {
