@@ -1,15 +1,13 @@
-name: CRUD e Análise SonarCloud
-
+name: SonarCloud
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
-  sonarcloud-analysis:
-    name: SonarCloud - Build and Analyze
+  build:
+    name: Build and analyze
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -37,25 +35,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=evelynbittelbrunn_tags-back
-
-  ec2-deploy:
-    name: Deploy to AWS EC2
-    runs-on: ubuntu-latest
-    environment:
-      name: AWS
-    steps:
-      - uses: actions/checkout@v3 # Action do proprio GitHub para clonar o repositório.
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Compile
-        run: mvn clean package # Comando que será executado neste passo, responsável por compilar o projeto Java usando o Maven e gerar o pacote.
-      - id: deploy
-        uses: bitovi/github-actions-deploy-docker-to-ec2@v1.0.0 # Action para realizar o deploy de contêineres Docker em instâncias EC2.
-        with:
-          checkout: false
-          aws_access_key_id: ${{secrets.AWS_ACCESS_KEY_ID}} # Define a chave de acesso da AWS para autenticação, armazenada nos secrets do repositório.
-          aws_secret_access_key: ${{secrets.SECRET_ACCESS_KEY}} # Define a chave secreta de acesso da AWS para autenticação, armazenada nos secrets do repositório.
-          aws_elb_app_port: 8080 # Define a porta do aplicativo que será exposta no ELB (Elastic Load Balancer) da AWS.
