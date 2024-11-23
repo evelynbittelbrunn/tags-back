@@ -78,39 +78,53 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.8</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+	  <plugins>
+	    <!-- Spring Boot Maven Plugin -->
+	    <plugin>
+	      <groupId>org.springframework.boot</groupId>
+	      <artifactId>spring-boot-maven-plugin</artifactId>
+	      <configuration>
+	        <excludes>
+	          <exclude>
+	            <groupId>org.projectlombok</groupId>
+	            <artifactId>lombok</artifactId>
+	          </exclude>
+	        </excludes>
+	      </configuration>
+	    </plugin>
+	
+	    <!-- Jacoco Maven Plugin -->
+	    <plugin>
+	      <groupId>org.jacoco</groupId>
+	      <artifactId>jacoco-maven-plugin</artifactId>
+	      <version>0.8.8</version>
+	      <executions>
+	        <execution>
+	          <goals>
+	            <goal>prepare-agent</goal>
+	          </goals>
+	        </execution>
+	        <execution>
+	          <id>report</id>
+	          <phase>test</phase>
+	          <goals>
+	            <goal>report</goal>
+	          </goals>
+	        </execution>
+	      </executions>
+	    </plugin>
+	
+	    <!-- Maven Compiler Plugin to use Java 17 -->
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-compiler-plugin</artifactId>
+	      <version>3.10.1</version> <!-- Use a versão mais recente do plugin -->
+	      <configuration>
+	        <release>17</release> <!-- Especifica que o código deve ser compilado para Java 17 -->
+	      </configuration>
+	    </plugin>
+	  </plugins>
 	</build>
+
 
 </project>
