@@ -29,7 +29,7 @@ public class SecurityConfigurations {
         return httpSecurity
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000/", "https://tags-front.vercel.app/", "https://ec2-18-212-21-12.compute-1.amazonaws.com/")); 
+                    config.setAllowedOrigins(List.of("http://localhost:3000/", "https://tags-front.vercel.app/", "https://tagsocial.site/")); 
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE")); 
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
