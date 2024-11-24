@@ -1,14 +1,18 @@
 package com.api.tags.user;
 
 import java.util.Base64;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.api.tags.follow.repository.FollowRepository;
 import com.api.tags.user.definition.UserModel;
 import com.api.tags.user.definition.dto.UserProfileDTO;
 import com.api.tags.user.definition.dto.UserProfileEditDTO;
+import com.api.tags.user.definition.dto.UserSearchDTO;
 import com.api.tags.user.factory.UserProfileFactory;
 import com.api.tags.user.repository.UserRepository;
 
@@ -52,5 +56,17 @@ public class UserService {
 	            : null;
 
 	    return new UserProfileEditDTO(user.getName(), user.getBio(), profilePicture);
+	}
+	
+	public List<UserSearchDTO> searchUsers(String name, Pageable pageable) {
+	    Page<UserModel> users = userRepository.findByNameContainingIgnoreCase(name, pageable);
+	    return users.getContent().stream()
+	            .map(user -> new UserSearchDTO(
+	            	user.getId(),
+	                user.getName(),
+	                user.getBio(),
+	                user.getProfilePicture() != null ? Base64.getEncoder().encodeToString(user.getProfilePicture()) : null
+	            ))
+	            .toList();
 	}
 }
