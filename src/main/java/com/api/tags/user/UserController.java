@@ -46,11 +46,11 @@ public class UserController {
     
     @GetMapping("/search")
     public ResponseEntity<List<UserSearchDTO>> searchUsers(
-        @RequestParam String name,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size
+        @RequestParam int pagination,
+        @RequestParam int items,
+        @RequestParam String name
     ) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(pagination - 1, items);
         List<UserSearchDTO> results = userService.searchUsers(name, pageable);
         return ResponseEntity.ok(results);
     }
