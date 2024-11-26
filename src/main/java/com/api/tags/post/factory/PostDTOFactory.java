@@ -44,6 +44,7 @@ public class PostDTOFactory {
         
         postDTO.setCommentCount(commentRepository.countByPostId(postModel.getId()));
         postDTO.setLikeCount(likeRepository.countByPostId(postModel.getId()));
+        postDTO.setCreatedAt(postModel.getCreatedAt());
         
         return postDTO;
     }
