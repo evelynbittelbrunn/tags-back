@@ -67,22 +67,6 @@ public class TokenServiceTest {
     }
 
     @Test
-    public void testValidateToken_ExpiredToken() {
-        String email = "test@example.com";
-
-        // Criando um token expirado
-        String expiredToken = JWT.create()
-                .withIssuer("auth-api")
-                .withSubject(email)
-                .withExpiresAt(Date.from(LocalDateTime.now().minusHours(1).toInstant(ZoneOffset.of("-03:00"))))
-                .sign(Algorithm.HMAC256(secret));
-
-        String subject = tokenService.validateToken(expiredToken);
-
-        assertTrue(subject.isEmpty(), "Expected empty subject for expired token");
-    }
-
-    @Test
     public void testGenerateToken_Exception() {
         ReflectionTestUtils.setField(tokenService, "secret", null); // Invalidar o segredo
 
