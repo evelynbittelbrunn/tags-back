@@ -13,9 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -33,4 +35,13 @@ public class UserCategoryModel {
     @MapsId("categoryId")
     @JoinColumn(name = "category_id")
     private CategoryModel category;
+    
+    @Override
+    public String toString() {
+        return "UserCategoryModel{" +
+                "id=" + id +
+                ", userId=" + (user != null ? user.getId() : "null") +
+                ", categoryId=" + (category != null ? category.getId() : "null") +
+                '}';
+    }
 }
