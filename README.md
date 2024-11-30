@@ -23,9 +23,13 @@ cd tags-back
 ## Importar o Projeto no Eclipse
 
 1 - Abra o Eclipse.
+
 2 - No menu superior, clique em File > Import.
+
 3- Selecione Existing Maven Projects para importar um projeto Maven.
+
 4 - Na janela seguinte, clique em Browse e selecione a pasta onde você clonou o projeto.
+
 5- Clique em Finish para concluir a importação. O Eclipse reconhecerá automaticamente o projeto Maven e começará a baixar as dependências necessárias.
 
  ## Executar o Projeto
