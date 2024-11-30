@@ -2,13 +2,9 @@
 
 ## Instalar o Java JDK e o Eclipse IDE
 
-- Instalar o Java JDK 17: Para instalar o Java JDK 17, acesse o site oficial da Oracle: [Oracle](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html). 
+- Instalar o Java JDK 17: Para instalar o Java JDK 17, acesse o site oficial da Oracle: [Oracle](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html). Escolha a versão 17 e siga as instruções de instalação fornecidas no site.
 
-Escolha a versão 17 e siga as instruções de instalação fornecidas no site.
-
-- Instalar o Eclipse IDE: Para instalar o Eclipse IDE, visite o site oficial: [Eclipse](https://www.eclipse.org/downloads/).
-
-Escolha a versão do Eclipse IDE para desenvolvedores Java e siga o passo a passo de instalação do site.
+- Instalar o Eclipse IDE: Para instalar o Eclipse IDE, visite o site oficial: [Eclipse](https://www.eclipse.org/downloads/). Escolha a versão do Eclipse IDE para desenvolvedores Java e siga o passo a passo de instalação do site.
 
 ## Clonar o repositório
 
@@ -35,6 +31,7 @@ cd tags-back
  ## Executar o Projeto
 
 1 - No Eclipse, localize a classe principal que contém o método main.
+
 2 - Clique com o botão direito sobre ela e selecione Run As > Java Application.
 
 O servidor será iniciado na porta 8080. Acesse a API em:
