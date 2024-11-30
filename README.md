@@ -30,7 +30,7 @@ cd tags-back
 
 4 - Na janela seguinte, clique em Browse e selecione a pasta onde você clonou o projeto.
 
-5- Clique em Finish para concluir a importação. O Eclipse reconhecerá automaticamente o projeto Maven e começará a baixar as dependências necessárias.
+5 - Clique em Finish para concluir a importação. O Eclipse reconhecerá automaticamente o projeto Maven e começará a baixar as dependências necessárias.
 
  ## Executar o Projeto
 
